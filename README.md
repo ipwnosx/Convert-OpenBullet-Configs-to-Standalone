@@ -23,3 +23,6 @@ Required: csc.exe
 	Found at: C:\WINDOWS\Microsoft.NET\Framework64\v4.0.30319\csc.exe
 	Installed with .net framework (i think) or definitely Visual Studio 2017+
 	This program must be located on the same drive as csc.exe to function. 
+
+# GUI PIC:
+# https://i.ibb.co/dG3FhHY/HO0k7dp.png
